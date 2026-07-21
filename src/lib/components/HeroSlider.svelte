@@ -5,6 +5,7 @@
 	 */
 	import { onMount } from 'svelte';
 	import type { Project } from '$lib/types/project';
+	import { appPath } from '$lib/utils/appPath';
 
 	interface Props {
 		/** スライドに表示するプロジェクト */
@@ -45,7 +46,7 @@
 <section class="relative h-[70vh] min-h-[480px] w-full overflow-hidden md:h-[85vh]" aria-label="フィーチャー実績">
 	{#each projects as project, index (project.slug)}
 		<a
-			href="/works/project/{project.slug}"
+			href={appPath(`/works/project/${project.slug}`)}
 			class="absolute inset-0 transition-opacity duration-1000 {index === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'}"
 			aria-hidden={index !== currentIndex}
 		>

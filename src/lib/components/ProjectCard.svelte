@@ -4,6 +4,7 @@
 	 * @description 実績一覧用のカード。ホバーで情報を表示する
 	 */
 	import type { Project } from '$lib/types/project';
+	import { appPath } from '$lib/utils/appPath';
 
 	interface Props {
 		/** プロジェクトデータ */
@@ -14,7 +15,7 @@
 </script>
 
 <a
-	href="/works/project/{project.slug}"
+	href={appPath(`/works/project/${project.slug}`)}
 	class="group relative block aspect-[4/5] overflow-hidden bg-cactus-line"
 >
 	<img

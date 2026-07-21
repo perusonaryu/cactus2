@@ -4,6 +4,7 @@
 	 * @description サイトフッター。著作権と主要リンクを表示する
 	 */
 	import { mainNavItems, siteName } from '$lib/data/site';
+	import { appPath } from '$lib/utils/appPath';
 
 	const currentYear = new Date().getFullYear();
 </script>
@@ -19,12 +20,12 @@
 			</div>
 			<nav class="grid grid-cols-2 gap-x-8 gap-y-3 sm:grid-cols-3" aria-label="フッターナビゲーション">
 				{#each mainNavItems as item (item.href)}
-					<a href={item.href} class="text-xs tracking-widest text-cactus-muted transition hover:text-cactus-accent">
+					<a href={appPath(item.href)} class="text-xs tracking-widest text-cactus-muted transition hover:text-cactus-accent">
 						{item.labelEn}
 					</a>
 				{/each}
-				<a href="/works" class="text-xs tracking-widest text-cactus-muted transition hover:text-cactus-accent">WORKS</a>
-				<a href="/career" class="text-xs tracking-widest text-cactus-muted transition hover:text-cactus-accent">CAREER</a>
+				<a href={appPath('/works')} class="text-xs tracking-widest text-cactus-muted transition hover:text-cactus-accent">WORKS</a>
+				<a href={appPath('/career')} class="text-xs tracking-widest text-cactus-muted transition hover:text-cactus-accent">CAREER</a>
 			</nav>
 		</div>
 		<p class="mt-12 text-xs tracking-wider text-cactus-muted">© {currentYear} {siteName}</p>

@@ -4,11 +4,12 @@
 	 * @description LARGO 風のテキストスライド＋背景反転ホバーを持つボタン／リンク
 	 */
 	import type { Snippet } from 'svelte';
+	import { appPath } from '$lib/utils/appPath';
 
 	interface Props {
 		/** ボタンラベル */
 		label: string;
-		/** リンク先（指定時は a 要素として描画） */
+		/** リンク先（指定時は a 要素として描画。アプリ内パスは base を自動付与） */
 		href?: string;
 		/** ボタン種別 */
 		type?: 'button' | 'submit' | 'reset';
@@ -31,6 +32,11 @@
 		class: className = '',
 		children
 	}: Props = $props();
+
+	/** base を考慮した実際の href */
+	const resolvedHref = $derived(
+		href && href.startsWith('/') && !href.startsWith('//') ? appPath(href) : href
+	);
 </script>
 
 {#snippet innerContent()}
@@ -52,8 +58,8 @@
 	</span>
 {/snippet}
 
-{#if href}
-	<a {href} class="hover-slide btn-primary {className}" class:is-disabled={disabled}>
+{#if resolvedHref}
+	<a href={resolvedHref} class="hover-slide btn-primary {className}" class:is-disabled={disabled}>
 		{@render innerContent()}
 	</a>
 {:else}

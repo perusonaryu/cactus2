@@ -4,6 +4,7 @@
 	 * @description トップページ中央のサービス紹介。横スクロールではなくタイル状に敷き詰めて表示する
 	 */
 	import type { ServiceSection } from '$lib/types/site';
+	import { appPath } from '$lib/utils/appPath';
 
 	interface Props {
 		/** サービスセクション一覧 */
@@ -31,7 +32,7 @@
 
 <section class="service-tile-grid border-t border-cactus-line" aria-label="サービス紹介">
 	{#each sections as section, index (section.id)}
-		<a href={section.href} class="service-tile group {tileSpanClass(index)}">
+		<a href={appPath(section.href)} class="service-tile group {tileSpanClass(index)}">
 			<img
 				src={section.imageUrl}
 				alt={section.titleEn}

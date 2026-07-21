@@ -1,8 +1,14 @@
 /**
  * @file SvelteKit 設定
- * @description レンタルサーバー向けに静的 HTML を出力する adapter-static を使用
+ * @description 静的 HTML 出力（adapter-static）。BASE_PATH で GitHub Pages のサブパスにも対応
  */
 import adapter from '@sveltejs/adapter-static';
+
+/**
+ * 公開時のベースパス
+ * @description 空文字 = ドメイン直下（レンタルサーバー等）。GitHub Pages では `/リポジトリ名`
+ */
+const basePath = process.env.BASE_PATH ?? '';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -11,6 +17,9 @@ const config = {
 		runes: ({ filename }) => (filename.split(/[/\\]/).includes('node_modules') ? undefined : true)
 	},
 	kit: {
+		paths: {
+			base: basePath
+		},
 		adapter: adapter({
 			pages: 'build',
 			assets: 'build',
