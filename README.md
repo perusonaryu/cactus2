@@ -7,6 +7,7 @@
 - SvelteKit 2 / Svelte 5
 - Tailwind CSS v4
 - TypeScript
+- `@sveltejs/adapter-static`（静的 HTML 出力）
 
 ## 開発
 
@@ -16,6 +17,40 @@ npm run dev
 ```
 
 ブラウザで `http://localhost:5173` を開いてください。
+
+## 静的ビルド（レンタルサーバー向け）
+
+```bash
+npm run build
+```
+
+出力は `build/` ディレクトリです。中身をそのままレンタルサーバーの公開ディレクトリ（例: `public_html`）へアップロードしてください。
+
+ローカルでビルド結果を確認する場合:
+
+```bash
+npm run preview
+```
+
+- 全ページはビルド時にプリレンダされます（サーバーサイド実行は不要）
+- URL は末尾スラッシュ付き（例: `/works/architecture/`）で、各パスに `index.html` が置かれます
+
+## GitHub Pages で公開する
+
+同じリポジトリから GitHub Actions で自動デプロイできます（`.github/workflows/deploy-github-pages.yml`）。
+
+1. リポジトリの **Settings → Pages → Build and deployment → Source** を **GitHub Actions** にする
+2. この変更を `main` にマージする（または Actions タブから workflow を手動実行する）
+3. 公開 URL: `https://<user>.github.io/<repo>/`（例: `https://perusonaryu.github.io/cactus2/`）
+
+GitHub Pages 用にローカルで確認する場合（サブパス付きビルド）:
+
+```bash
+BASE_PATH=/cactus2 npm run build
+BASE_PATH=/cactus2 npm run preview
+```
+
+レンタルサーバー向け（ドメイン直下）は従来どおり `BASE_PATH` なしの `npm run build` で問題ありません。
 
 ## ページ構成
 

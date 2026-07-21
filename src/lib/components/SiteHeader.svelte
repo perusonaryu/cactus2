@@ -7,6 +7,7 @@
 	import TextLink from '$lib/components/TextLink.svelte';
 	import { mainNavItems, siteName } from '$lib/data/site';
 	import { pageTransitionState } from '$lib/state/pageTransition.svelte';
+	import { appPath, stripBasePath } from '$lib/utils/appPath';
 
 	/** ページ遷移中はヘッダー操作を無効化 */
 	const isPageLoading = $derived(pageTransitionState.phase !== 'idle');
@@ -16,11 +17,13 @@
 
 	/**
 	 * ナビ項目がアクティブか判定する
-	 * @param href - リンク先パス
+	 * @param href - アプリ内リンク先パス（base なし）
 	 * @returns アクティブなら true
 	 */
 	function isNavActive(href: string): boolean {
-		return page.url.pathname === href || page.url.pathname.startsWith(`${href}/`);
+		const currentPath = stripBasePath(page.url.pathname);
+		const targetPath = href === '/' ? '/' : href.replace(/\/+$/, '');
+		return currentPath === targetPath || currentPath.startsWith(`${targetPath}/`);
 	}
 
 	/**
@@ -54,7 +57,7 @@
 	class:opacity-60={isPageLoading}
 >
 	<div class="mx-auto flex h-16 max-w-[1400px] items-center justify-between px-6 md:h-20 md:px-10">
-		<a href="/" class="group flex flex-col" onclick={closeMenu}>
+		<a href={appPath('/')} class="group flex flex-col" onclick={closeMenu}>
 			<span class="font-serif text-lg tracking-[0.2em] text-cactus-ink transition group-hover:text-cactus-accent md:text-xl">
 				{siteName}
 			</span>
