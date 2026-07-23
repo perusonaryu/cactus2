@@ -1,11 +1,11 @@
 <script lang="ts">
 	/**
 	 * @component CategoryFilter
-	 * @description 実績カテゴリのフィルタータブ
+	 * @description 実績カテゴリのフィルタータブ（ヘッダーと同系の下線ホバー／選択時は下線維持）
 	 */
+	import TextLink from '$lib/components/TextLink.svelte';
 	import { categoryFilters } from '$lib/data/site';
 	import type { ProjectCategoryId } from '$lib/types/site';
-	import { appPath } from '$lib/utils/appPath';
 
 	interface Props {
 		/** 現在のカテゴリID */
@@ -13,18 +13,29 @@
 	}
 
 	let { currentCategory }: Props = $props();
+
+	/**
+	 * フィルターリンク用のクラス名を返す
+	 * @param filterId - カテゴリID
+	 * @returns クラス文字列
+	 */
+	function filterLinkClass(filterId: ProjectCategoryId): string {
+		const classes = ['filter-text-link'];
+		if (currentCategory === filterId) {
+			classes.push('is-active');
+		}
+		return classes.join(' ');
+	}
 </script>
 
-<nav class="mb-10 flex flex-wrap gap-x-6 gap-y-2 border-b border-cactus-line pb-6" aria-label="カテゴリフィルター">
+<nav class="mb-10 flex flex-wrap gap-x-6 gap-y-3 border-b border-cactus-line pb-6" aria-label="カテゴリフィルター">
 	{#each categoryFilters as filter (filter.id)}
-		<a
-			href={appPath(filter.href)}
-			class="text-xs tracking-[0.2em] transition {currentCategory === filter.id
-				? 'text-cactus-accent'
-				: 'text-cactus-muted hover:text-cactus-ink'}"
+		<TextLink
+			href={filter.href}
+			class={filterLinkClass(filter.id)}
 			aria-current={currentCategory === filter.id ? 'page' : undefined}
 		>
 			{filter.label}
-		</a>
+		</TextLink>
 	{/each}
 </nav>

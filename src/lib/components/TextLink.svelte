@@ -11,19 +11,27 @@
 		href: string;
 		/** 追加クラス */
 		class?: string;
+		/** 現在ページを示す aria-current（例: page） */
+		'aria-current'?: 'page' | 'step' | 'location' | 'date' | 'time' | 'true' | 'false' | undefined;
 		/** クリック時コールバック */
 		onclick?: (event: MouseEvent) => void;
 		/** 子要素 */
 		children: Snippet;
 	}
 
-	let { href, class: className = '', onclick, children }: Props = $props();
+	let {
+		href,
+		class: className = '',
+		'aria-current': ariaCurrent = undefined,
+		onclick,
+		children
+	}: Props = $props();
 
 	/** base を考慮した実際の href */
 	const resolvedHref = $derived(href.startsWith('/') && !href.startsWith('//') ? appPath(href) : href);
 </script>
 
-<a href={resolvedHref} class="text-link {className}" {onclick}>
+<a href={resolvedHref} class="text-link {className}" aria-current={ariaCurrent} {onclick}>
 	<span class="text-link-label">
 		{@render children()}
 	</span>
