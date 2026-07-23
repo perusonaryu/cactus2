@@ -2,6 +2,7 @@
 	/**
 	 * @component PageHeading
 	 * @description 下層ページ用の英語タイトル（LARGO 風のマスクリvealアニメーション付き）
+	 * @description イントロはマウント時に一度だけ再生し、subtitle の更新では再実行しない
 	 */
 	import { onMount } from 'svelte';
 
@@ -14,7 +15,7 @@
 
 	let { titleEn, subtitle }: Props = $props();
 
-	/** イントロアニメーション表示済みか */
+	/** イントロアニメーション表示済みか（マウント中は維持） */
 	let isVisible = $state(false);
 
 	onMount(() => {
