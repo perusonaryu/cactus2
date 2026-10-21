@@ -303,6 +303,11 @@ body.is-page-loading {
 	}
 }
 
+/* 選択中リンクは下線を常時表示 */
+.text-link.is-active .text-link-label::after {
+	transform: scaleX(1);
+}
+
 /* ページ見出しのイントロアニメーション */
 .intro-title .intro-line {
 	display: block;
@@ -339,6 +344,12 @@ body.is-page-loading {
 .intro-subtitle.is-visible {
 	opacity: 1;
 	transform: translate3d(0, 0, 0);
+}
+
+/* イントロ完了後はテキスト差し替えで再アニメしない */
+.intro-title.is-intro-done .intro-line-inner,
+.intro-subtitle.is-intro-done {
+	transition: none;
 }
 
 /* メニューボタン（LARGO ButtonMenu 相当） */

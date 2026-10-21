@@ -11,7 +11,10 @@
 	import SiteHeader from '$lib/components/SiteHeader.svelte';
 	import { siteName, defaultDescription } from '$lib/data/site';
 	import { pageTransitionState } from '$lib/state/pageTransition.svelte';
-	import { registerPageTransitionNavigation } from '$lib/utils/pageTransitionNav';
+	import {
+		getPageTransitionKey,
+		registerPageTransitionNavigation
+	} from '$lib/utils/pageTransitionNav';
 
 	let { children } = $props();
 
@@ -19,6 +22,9 @@
 
 	/** ページ遷移中か */
 	const isPageLoading = $derived(pageTransitionState.phase !== 'idle');
+
+	/** フィルター切替では同じキーにし、コンテンツのフェード再マウントを防ぐ */
+	const pageTransitionKey = $derived(getPageTransitionKey(page.url.pathname));
 </script>
 
 <svelte:head>
@@ -38,7 +44,7 @@
 <PageTransitionOverlay />
 <SiteHeader />
 <main class="min-h-screen pt-16 md:pt-20">
-	{#key page.url.pathname}
+	{#key pageTransitionKey}
 		<div class="page-main" class:is-show={pageTransitionState.showContent}>
 			{@render children()}
 		</div>

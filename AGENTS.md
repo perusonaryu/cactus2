@@ -12,3 +12,4 @@ This repo is a single SvelteKit 2 / Svelte 5 (runes) static portfolio site (CACT
 - Tests: no automated test runner is configured.
 - External assets: project images load from Unsplash and fonts from Google Fonts. Without network access the site still runs but images/fonts fall back — not a bug.
 - Contact forms (`/contact`, `/contact/partner`) are client-side demo-only; submitting shows a "送信完了（デモ）" message and performs no real network request.
+- Works category pages (`/works` ↔ `/works/[category]`): in-page category tabs were removed; navigation is via the header. Page-transition overlay is skipped between these list routes; `works/+layout.svelte` keeps `PageHeading` mounted so intro/title animations run only on first enter. Pending transition timers are cleared on every navigation to avoid late overlay flashes. Project detail (`/works/project/...`) still uses the full transition.
