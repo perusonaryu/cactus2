@@ -1,7 +1,7 @@
 <script lang="ts">
 	/**
 	 * @layout 実績セクション共通レイアウト
-	 * @description 一覧ページでは見出しを維持し、詳細ページでは子ページのみ描画する
+	 * @description カテゴリ一覧ではカテゴリ名を見出しにし、詳細ページでは子ページのみ描画する
 	 */
 	import { page } from '$app/state';
 	import PageHeading from '$lib/components/PageHeading.svelte';
@@ -21,29 +21,23 @@
 	/** 現在のカテゴリID */
 	const categoryId = $derived(resolveCategoryFromPath(page.params.category));
 
+	/** カテゴリ別一覧かどうか（ALL /works ではない） */
+	const isCategoryPage = $derived(categoryId !== 'all');
+
 	/** 一覧の件数 */
 	const filteredCount = $derived(getProjectsByCategory(categoryId).length);
 
-	/**
-	 * ページ見出し（英語）
-	 * @description ALL は WORKS。ヘッダーから ARCHITECTURE 等へ来た場合はそのカテゴリ名をタイトルにする
-	 */
-	const headingTitleEn = $derived(
-		categoryId === 'all' ? 'WORKS' : getCategoryLabel(categoryId)
-	);
+	/** カテゴリページの見出し（英語カテゴリ名） */
+	const headingTitleEn = $derived(getCategoryLabel(categoryId));
 
-	/** 見出し下のサブタイトル（テキスト更新のみ。イントロ再アニメはしない） */
-	const subtitle = $derived(
-		categoryId === 'all'
-			? `実績一覧（全 ${projects.length} 件・ダミーデータ）`
-			: `実績一覧（${filteredCount} 件）`
-	);
+	/** カテゴリページのサブタイトル */
+	const subtitle = $derived(`実績一覧（${filteredCount} 件）`);
 
-	/** ブラウザタイトル用 */
+	/** ブラウザタイトル用（WORKS は付けない） */
 	const documentTitle = $derived(
-		categoryId === 'all'
-			? 'WORKS | CACTUS design'
-			: `${getCategoryLabel(categoryId)} | WORKS | CACTUS design`
+		isCategoryPage
+			? `${getCategoryLabel(categoryId)} | CACTUS design`
+			: `実績一覧（全 ${projects.length} 件） | CACTUS design`
 	);
 </script>
 
@@ -55,7 +49,9 @@
 
 {#if isListPage}
 	<div class="mx-auto max-w-[1400px] px-6 py-16 md:px-10 md:py-24">
-		<PageHeading titleEn={headingTitleEn} {subtitle} />
+		{#if isCategoryPage}
+			<PageHeading titleEn={headingTitleEn} {subtitle} />
+		{/if}
 		{@render children()}
 	</div>
 {:else}

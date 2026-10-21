@@ -11,7 +11,7 @@
 </script>
 
 <svelte:head>
-	<title>{project.name} | WORKS | CACTUS design</title>
+	<title>{project.name} | CACTUS design</title>
 </svelte:head>
 
 <article>
@@ -21,7 +21,9 @@
 	</div>
 
 	<div class="mx-auto max-w-[1400px] px-6 py-16 md:px-10 md:py-24">
-		<TextLink href="/works" class="text-xs tracking-[0.2em] text-cactus-muted">← WORKS</TextLink>
+		<TextLink href="/works/{project.category}" class="text-xs tracking-[0.2em] text-cactus-muted">
+			← {project.categoryLabel}
+		</TextLink>
 
 		<div class="mt-8 grid gap-12 lg:grid-cols-[1fr_320px]">
 			<div>
