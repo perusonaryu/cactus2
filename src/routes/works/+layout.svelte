@@ -25,11 +25,19 @@
 	/** フィルター後の件数 */
 	const filteredCount = $derived(getProjectsByCategory(categoryId).length);
 
+	/**
+	 * ページ見出し（英語）
+	 * @description ALL は WORKS。ヘッダーから ARCHITECTURE 等へ来た場合はそのカテゴリ名をタイトルにする
+	 */
+	const headingTitleEn = $derived(
+		categoryId === 'all' ? 'WORKS' : getCategoryLabel(categoryId)
+	);
+
 	/** 見出し下のサブタイトル（テキスト更新のみ。イントロ再アニメはしない） */
 	const subtitle = $derived(
 		categoryId === 'all'
 			? `実績一覧（全 ${projects.length} 件・ダミーデータ）`
-			: `${getCategoryLabel(categoryId)}（${filteredCount} 件）`
+			: `実績一覧（${filteredCount} 件）`
 	);
 
 	/** ブラウザタイトル用 */
@@ -48,7 +56,7 @@
 
 {#if isListPage}
 	<div class="mx-auto max-w-[1400px] px-6 py-16 md:px-10 md:py-24">
-		<PageHeading titleEn="WORKS" {subtitle} />
+		<PageHeading titleEn={headingTitleEn} {subtitle} />
 		<CategoryFilter currentCategory={categoryId} />
 		{@render children()}
 	</div>
