@@ -1,7 +1,7 @@
 <script lang="ts">
 	/**
 	 * @page 実績一覧（全カテゴリ）
-	 * @description 見出し・フィルターは works/+layout.svelte 側で維持する
+	 * @description 見出しは works/+layout.svelte 側で維持する
 	 */
 	import ProjectCard from '$lib/components/ProjectCard.svelte';
 	import { getProjectsByCategory } from '$lib/data/projects';

@@ -303,31 +303,9 @@ body.is-page-loading {
 	}
 }
 
-/* 選択中リンクは下線を常時表示（フィルター等） */
+/* 選択中リンクは下線を常時表示 */
 .text-link.is-active .text-link-label::after {
 	transform: scaleX(1);
-}
-
-/* 実績カテゴリフィルター（ヘッダーナビと同系の見た目） */
-.filter-text-link {
-	font-size: 0.75rem;
-	letter-spacing: 0.2em;
-	color: #6b6b6b;
-	transition: color 0.4s var(--ease-largo-out);
-}
-
-.filter-text-link.is-active {
-	color: #4a6b4e;
-}
-
-@media (hover: hover) {
-	.filter-text-link:hover {
-		color: #1c1c1c;
-	}
-
-	.filter-text-link.is-active:hover {
-		color: #4a6b4e;
-	}
 }
 
 /* ページ見出しのイントロアニメーション */

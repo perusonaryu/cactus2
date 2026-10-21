@@ -1,10 +1,9 @@
 <script lang="ts">
 	/**
 	 * @layout 実績セクション共通レイアウト
-	 * @description 一覧フィルター時は見出し・タブを維持し、詳細ページでは子ページのみ描画する
+	 * @description 一覧ページでは見出しを維持し、詳細ページでは子ページのみ描画する
 	 */
 	import { page } from '$app/state';
-	import CategoryFilter from '$lib/components/CategoryFilter.svelte';
 	import PageHeading from '$lib/components/PageHeading.svelte';
 	import {
 		getCategoryLabel,
@@ -16,13 +15,13 @@
 
 	let { children } = $props();
 
-	/** 実績一覧（フィルター）ページかどうか */
+	/** 実績一覧ページかどうか */
 	const isListPage = $derived(isWorksListPath(page.url.pathname));
 
 	/** 現在のカテゴリID */
 	const categoryId = $derived(resolveCategoryFromPath(page.params.category));
 
-	/** フィルター後の件数 */
+	/** 一覧の件数 */
 	const filteredCount = $derived(getProjectsByCategory(categoryId).length);
 
 	/**
@@ -57,7 +56,6 @@
 {#if isListPage}
 	<div class="mx-auto max-w-[1400px] px-6 py-16 md:px-10 md:py-24">
 		<PageHeading titleEn={headingTitleEn} {subtitle} />
-		<CategoryFilter currentCategory={categoryId} />
 		{@render children()}
 	</div>
 {:else}
