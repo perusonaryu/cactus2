@@ -3,7 +3,10 @@ name: Deploy GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      # 作業ブランチの確認用プレビュー（本番と同じ Pages URL に上書きデプロイ）
+      - 'cursor/**'
   workflow_dispatch:
 
 permissions:
